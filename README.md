@@ -1,5 +1,5 @@
 ##应用介绍
-nodejs爬虫，爬取汽车之家（http://www.autohome.com.cn/car/车型数据。
+nodejs爬虫，爬取汽车之家所有车型数据 http://www.autohome.com.cn/car/
 
 包括品牌，车系，年份，车型四个层级。
 
