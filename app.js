@@ -4,9 +4,12 @@ var express = require('express'),
   iconv = require('iconv-lite'),
   cheerio = require('cheerio'),
   async = require("async"), // 控制并发数，防止被封IP
-  fs = require('fs');
+  fs = require('fs'),
+  JSONStream = require('JSONStream'),
+  path = require('path');
 
 var fetchData = []; // 存放爬取数据
+var SaveToMongo = require('save-to-mongo');
 
 /**
  * 睡眠模拟函数
@@ -38,13 +41,13 @@ function fetchBrand(req, res) {
   }
 
   var curCount = 0;
-  var reptileMove = function(url, callback) {
+  var reptileMove = function (url, callback) {
     var startTime = Date.now(); // 记录该次爬取的开始时间
 
     request({
       url: url,
       encoding: null // 关键代码
-    }, function(err, res, body) {
+    }, function (err, res, body) {
       if (err || res.statusCode != 200) {
         console.error(err);
         console.log('抓取该页面失败，重新抓取该页面..')
@@ -83,9 +86,9 @@ function fetchBrand(req, res) {
   // 使用async控制异步抓取   
   // mapLimit(arr, limit, iterator, [callback])
   // 异步回调
-  async.mapLimit(pageUrls, 1, function(url, callback) {
+  async.mapLimit(pageUrls, 1, function (url, callback) {
     reptileMove(url, callback);
-  }, function(err, result) {
+  }, function (err, result) {
     console.log('----------------------------');
     console.log('品牌车系抓取完毕！');
     console.log('----------------------------');
@@ -110,14 +113,14 @@ function fetchYear(req, res) {
   }
 
   var curCount = 0;
-  var reptileMove = function(series, callback) {
+  var reptileMove = function (series, callback) {
     var startTime = Date.now(); // 记录该次爬取的开始时间
     curCount++; // 并发数
 
     request({
       url: series.url,
       encoding: null // gbk转码关键代码
-    }, function(err, res, body) {
+    }, function (err, res, body) {
       if (err || res.statusCode != 200) {
         console.error(err);
         console.log('抓取该页面失败，重新抓取该页面..')
@@ -130,7 +133,7 @@ function fetchYear(req, res) {
 
       // 页面默认的数据
       var itemList = $('.interval01-list li');
-      itemList.each(function(){
+      itemList.each(function () {
         var year = $(this).find('a').eq(0).text().substr(0, 4);
         var name = $(this).find('a').eq(0).text();
         var flag = false;
@@ -152,7 +155,7 @@ function fetchYear(req, res) {
 
       // 下拉框中的年份抓取
       var curYears = $('.cartype-sale-list li');
-      curYears.each(function(){
+      curYears.each(function () {
         var year = $(this).text().substr(0, 4);
         var flag = false;
 
@@ -160,8 +163,8 @@ function fetchYear(req, res) {
         var s = href.split('/')[3]; // 从url中截取所需的s参数
         var y = ($(this).find('a').attr('data'))
         var url = 'http://www.autohome.com.cn/ashx/series_allspec.ashx?s='
-                  + s + '&y=' + y;
-        
+          + s + '&y=' + y;
+
         for (item of series.sub) {
           if (item.name == year) {
             item.url = url;
@@ -177,7 +180,7 @@ function fetchYear(req, res) {
           series.sub.push(obj);
         }
       })
-      
+
       curCount--;
       countSuccess++;
       var time = Date.now() - startTime;
@@ -193,9 +196,9 @@ function fetchYear(req, res) {
   // 使用async控制异步抓取   
   // mapLimit(arr, limit, iterator, [callback])
   // 异步回调
-  async.mapLimit(seriesArr, 10, function(series, callback) {
+  async.mapLimit(seriesArr, 10, function (series, callback) {
     reptileMove(series, callback);
-  }, function(err, result) {
+  }, function (err, result) {
     // 访问完成的回调函数
     console.log('----------------------------');
     console.log('车系抓取成功，共有数据：' + countSuccess);
@@ -224,7 +227,7 @@ function fetchName(req, res) {
   }
 
   var curCount = 0;
-  var reptileMove = function(year, callback) {
+  var reptileMove = function (year, callback) {
     var startTime = Date.now(); // 记录该次爬取的开始时间
     curCount++; // 并发数
     // console.log(curCount + ': ' + series.url);
@@ -232,7 +235,7 @@ function fetchName(req, res) {
     request({
       url: year.url,
       encoding: null // gbk转码关键代码
-    }, function(err, res, body) {
+    }, function (err, res, body) {
       if (err || res.statusCode != 200) {
         console.error(err);
         console.log('抓取该页面失败，重新抓取该页面..')
@@ -245,7 +248,7 @@ function fetchName(req, res) {
       var html = iconv.decode(body, 'gb2312')
       try {
         var data = JSON.parse(html)
-      } catch(e) {
+      } catch (e) {
         console.log('error... 忽略该页面');
         // reptileMove(series, callback);
         curCount--;
@@ -255,8 +258,8 @@ function fetchName(req, res) {
       var specArr = data.Spec;
       for (var item of specArr) {
         year.sub.push(item.Name);
-      }    
-      
+      }
+
       curCount--;
       countSuccess++;
       var time = Date.now() - startTime;
@@ -270,9 +273,9 @@ function fetchName(req, res) {
   // 使用async控制异步抓取   
   // mapLimit(arr, limit, iterator, [callback])
   // 异步回调
-  async.mapLimit(yearArr, 20, function(year, callback) {
+  async.mapLimit(yearArr, 20, function (year, callback) {
     reptileMove(year, callback);
-  }, function(err, result) {
+  }, function (err, result) {
     // 访问完成的回调函数
     console.log('----------------------------');
     console.log('车型抓取成功，共有数据：' + countSuccess);
@@ -280,6 +283,18 @@ function fetchName(req, res) {
     // res.send(fetchData);
     var t = JSON.stringify(fetchData);
     fs.writeFileSync('data.json', t);
+
+    //将data.json存入MongoDB中
+    fs.createReadStream(path.join(__dirname, './data.json'))
+      .pipe(JSONStream.parse('*'))
+      .pipe(saveToMongo)
+      .on('execute-error', function(err) {
+        console.log(err);
+      })
+      .on('done', function() {
+        console.log('存入完毕!');
+        process.exit(0);
+      });
   });
 }
 
@@ -288,8 +303,11 @@ function fetchName(req, res) {
  */
 fetchBrand();
 
-// 开启express路由，用于浏览器调试
-// app.get('/', fetchBrand);
-// var server = app.listen(3000, function() {
-//   console.log('listening at 3000');
-// });
+//配置MongoDB成功
+var saveToMongo = SaveToMongo({
+  uri: 'mongodb://127.0.0.1:27017/carDb',  //mongoDB的地址
+  collection: 'savetomongo',
+  bulk: {
+    mode: 'unordered'
+  }
+});
