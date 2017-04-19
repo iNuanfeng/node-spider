@@ -39,6 +39,8 @@ http://www.autohome.com.cn/3128 在售款有2016，2017同时存在
 
 抓取失败时重新抓取该页面
 
+#环境要求
+运行项目前请先安装Node和MongoDB数据库
 
 
 ##使用方法
@@ -48,8 +50,6 @@ http://www.autohome.com.cn/3128 在售款有2016，2017同时存在
 npm install
 # 启动爬虫，数据存储于data.json
 node app
-# 将data.json的数据保存到mysql
-node save-mysql
-# 将data.json的数据保存到mongoDB
-node save-mongo
+# 存入MongoDB数据库
+注意：爬虫的数据自动存入你本地的MongoDB数据库（前提是你已经安装了MongDB数据库）
 ```
