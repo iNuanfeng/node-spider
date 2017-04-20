@@ -5,7 +5,7 @@ nodejs爬虫，爬取汽车之家所有车型数据 http://www.autohome.com.cn/c
 
 ## 特性
 
-### 特性
+### 现有特性
 
 1、爬取汽车之家的数据
 2、自动存入MongoDB数据库
