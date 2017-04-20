@@ -30,9 +30,11 @@ nodejs爬虫，爬取汽车之家所有车型数据 http://www.autohome.com.cn/c
 
   去除express模块，该为控制台直接开启爬虫（数据量大，打开网页来开启爬虫可能会由于超时而重新发起访问）
 
-** 最终使用的模块为：** `request`, `iconv`, `cheerio`, `async`
 
-   最后写入到数据库mongoDB
+### 最终使用的模块
+   `request`, `iconv`, `cheerio`, `async`
+
+   最后自动存入到mongoDB数据库
 
 ## 项目说明
 
