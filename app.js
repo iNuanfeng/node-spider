@@ -9,7 +9,11 @@ var express = require('express'),
   path = require('path');
 
 var fetchData = []; // 存放爬取数据
-var SaveToMongo = require('save-to-mongo');
+var SaveToMongo = require('save-to-mongo');//用于将爬取的数据存储到MongoDB数据库
+
+var Highcharts = require('highcharts');//将爬取的数据用Highchart展示
+
+require('highcharts/modules/exporting')(Highcharts);//在Highcharts加载之后加载功能模块
 
 /**
  * 睡眠模拟函数
@@ -303,11 +307,20 @@ function fetchName(req, res) {
  */
 fetchBrand();
 
-//配置MongoDB成功
+/**
+ * 配置MongoDB成功
+ */
 var saveToMongo = SaveToMongo({
   uri: 'mongodb://127.0.0.1:27017/carDb',  //mongoDB的地址
   collection: 'savetomongo',
   bulk: {
     mode: 'unordered'
   }
+});
+
+/**
+ * 创建图表
+ */
+Highcharts.chart('container', {
+  // Highcharts配置
 });
