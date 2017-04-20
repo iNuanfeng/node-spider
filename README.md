@@ -45,6 +45,10 @@ nodejs爬虫，爬取汽车之家所有车型数据 http://www.autohome.com.cn/c
 
    运行项目前请先安装Node和MongoDB数据库
 
+## 贡献者
+
+Frank--https://github.com/sunfeng90
+
 ## 使用方法
 
 ```bash
@@ -59,3 +63,10 @@ node app
 注意：爬虫的数据自动存入你本地的MongoDB数据库（前提是你已经安装了MongDB数据库）
 
 ```
+
+##  赞助
+
+
+## 协议
+
+- [MIT](https://github.com/itead/IoTgo-Pro/blob/master/LICENSE)
