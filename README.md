@@ -3,6 +3,19 @@ nodejs爬虫，爬取汽车之家所有车型数据 http://www.autohome.com.cn/c
 
 包括品牌，车系，年份，车型四个层级。
 
+## 特性
+
+### 特性
+
+1、爬取汽车之家的数据
+2、自动存入MongoDB数据库
+
+### 未来要添加特性
+
+1、用HighChart显示爬取数据
+2、将数据自动存入MySQL
+3、添加单元测试
+
 ### 使用的node模块：
 
   superagent, request, iconv; （网络请求模块，iconv用于gbk转码）
@@ -25,13 +38,13 @@ nodejs爬虫，爬取汽车之家所有车型数据 http://www.autohome.com.cn/c
 
    app.js是爬虫主程序，分步骤抓取数据。
 
-#### 步骤：
+###  爬取步骤：
 
    1. 抓取品牌和车系
    2. 抓取年份
    3. 抓取车型
    4. 存入本地json文件
-   5. 按需写入数据库（暂时没写)
+   5. 自动存入MongoDB数据库
 
 ### 细节控制
 
