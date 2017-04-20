@@ -3,6 +3,22 @@ nodejs爬虫，爬取汽车之家所有车型数据 http://www.autohome.com.cn/c
 
 包括品牌，车系，年份，车型四个层级。
 
+## 特性
+
+### 现有特性
+
+1、爬取汽车之家的数据;
+
+2、自动存入MongoDB数据库
+
+### 未来要添加特性
+
+1、用HighChart显示爬取数据;
+
+2、将数据自动存入MySQL;
+
+3、添加单元测试.
+
 ### 使用的node模块：
 
   superagent, request, iconv; （网络请求模块，iconv用于gbk转码）
@@ -17,33 +33,43 @@ nodejs爬虫，爬取汽车之家所有车型数据 http://www.autohome.com.cn/c
 
   去除express模块，该为控制台直接开启爬虫（数据量大，打开网页来开启爬虫可能会由于超时而重新发起访问）
 
-** 最终使用的模块为：** `request`, `iconv`, `cheerio`, `async`
 
-   最后写入到数据库mongoDB
+### 最终使用的模块
+   `request`, `iconv`, `cheerio`, `async`
+
+   最后自动存入到mongoDB数据库
 
 ## 项目说明
 
    app.js是爬虫主程序，分步骤抓取数据。
 
-#### 步骤：
+###  爬取步骤：
 
-   1. 抓取品牌和车系
-   2. 抓取年份
-   3. 抓取车型
-   4. 存入本地json文件
-   5. 按需写入数据库（暂时没写)
+   1. 抓取品牌和车系;
+   2. 抓取年份;
+   3. 抓取车型;
+   4. 存入本地json文件;
+   5. 自动存入MongoDB数据库.
 
 ### 细节控制
 
-   http://www.autohome.com.cn/3128 在售款有2016，2017同时存在
+   1、在售款有2016款和2017款;
 
-   有的车系在售有2016，停售也有2016
+   2、有的车系在售有2016款，停售的也有2016款;
 
-   抓取失败时重新抓取该页面
+   3、抓取失败时重新抓取该页面;
+
+   4、抓取完毕自动存入data.json;
+
+   5、存取完毕，读取并存入MongoDB;
 
 ## 环境要求
 
    运行项目前请先安装Node和MongoDB数据库
+
+## 贡献者
+
+Frank--https://github.com/sunfeng90
 
 ## 使用方法
 
@@ -59,3 +85,10 @@ node app
 注意：爬虫的数据自动存入你本地的MongoDB数据库（前提是你已经安装了MongDB数据库）
 
 ```
+
+##  赞助
+
+
+## 协议
+
+- [MIT](https://github.com/itead/IoTgo-Pro/blob/master/LICENSE)
