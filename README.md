@@ -88,7 +88,7 @@ node app
 
 ## 爬取结果截图
 
-![MongoDB数据库截图](https://github.com/sunfeng90/node-spider/results/result-mongo.png)
+![MongoDB数据库截图](results/result-mongo.png)
 
 
 ##  赞助
