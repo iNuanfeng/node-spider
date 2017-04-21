@@ -86,6 +86,11 @@ node app
 
 ```
 
+## 爬取结果截图
+
+- [MongoDB数据库截图](https://github.com/sunfeng90/node-spider/Results/result-mongo.png)
+
+
 ##  赞助
 
 
