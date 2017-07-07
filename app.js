@@ -3,7 +3,6 @@ var express = require('express'),
   request = require('request'),
   iconv = require('iconv-lite'),
   cheerio = require('cheerio'),
-  async = require("async"), // 控制并发数，防止被封IP
   fs = require('fs');
 
 var CONFIG = {
