@@ -7,6 +7,7 @@ var express = require('express'),
 
 var CONFIG = {
   uri: 'http://www.mca.gov.cn/article/sj/tjbz/a/2017/201705/201706301407.html'
+  // uri: 'http://localhost:3000/a'
 }
 
 /**
@@ -42,12 +43,12 @@ function filterData(trs) {
 /**
  * 生成地区数据
  */
-function generateArea(data) {
+function generateArea(data, res) {
   var areas = data;
   var result = [];
 
   let province = areas.filter(item => {
-    return item.code.indexOf('0000') > 1;
+    return item.code.indexOf('0000') > 1 || item.code.indexOf('00000') > 0;
   });
 
   province.forEach(p => {
@@ -139,7 +140,7 @@ function start(req, res) {
     var data = filterData(trs);
 
     // 生成数据文件
-    var result = generateArea(data);
+    var result = generateArea(data, _res);
 
     // 开始写入文件
     console.log('数据生成完成，开始写入文件...')
