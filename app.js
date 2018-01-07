@@ -19,7 +19,7 @@ mkdirp(dir, function(err) {
 
 var urlArr = [];
 
-for (var i = 0; i <= 70; i++) {
+for (var i = 61; i <= 70; i++) {
   urlArr.push('https://speakerd.s3.amazonaws.com/presentations/dcc10ff09b7a013185554adba30e7edb/slide_' + i + '.jpg');
 }
 
@@ -33,7 +33,5 @@ var download = function(url, dir, filename) {
 };
 
 urlArr.map(function(val) {
-  setTimeout(function() {
-    download(val, dir, val.split('slide_')[1]);
-  }, 500);
+  download(val, dir, val.split('slide_')[1]);
 })
