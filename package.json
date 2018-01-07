@@ -12,6 +12,7 @@
     "cheerio": "^0.22.0",
     "express": "^4.14.0",
     "iconv-lite": "^0.4.15",
+    "mkdirp": "^0.5.1",
     "request": "^2.79.0"
   }
 }
