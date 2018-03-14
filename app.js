@@ -6,7 +6,7 @@ var express = require('express'),
   fs = require('fs');
 
 var CONFIG = {
-  uri: 'http://www.mca.gov.cn/article/sj/tjbz/a/2017/201705/201706301407.html'
+  uri: 'http://www.mca.gov.cn/article/sj/tjbz/a/2018/201803131439.html'
   // uri: 'http://localhost:3000/a'
 }
 
