@@ -1,0 +1,22 @@
+{
+  "name": "spider-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://inuanfeng@github.com/iNuanfeng/node-spider.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iNuanfeng/node-spider/issues"
+  },
+  "homepage": "https://github.com/iNuanfeng/node-spider#readme",
+  "dependencies": {
+    "puppeteer": "^1.11.0"
+  }
+}
