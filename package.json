@@ -1,18 +1,23 @@
 {
-  "name": "area-spider",
+  "name": "spider-app",
   "version": "1.0.0",
-  "description": "从民政部网站，爬取省市区最新数据，可配置最新的网址",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "kangxufeng(kangxufeng@duiba.com.cn)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://inuanfeng@github.com/iNuanfeng/node-spider.git"
+  },
+  "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iNuanfeng/node-spider/issues"
+  },
+  "homepage": "https://github.com/iNuanfeng/node-spider#readme",
   "dependencies": {
-    "cheerio": "^0.22.0",
-    "express": "^4.14.0",
-    "iconv-lite": "^0.4.15",
-    "mkdirp": "^0.5.1",
-    "request": "^2.79.0"
+    "progress": "^2.0.2",
+    "puppeteer": "^1.11.0"
   }
 }
