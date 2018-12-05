@@ -170,7 +170,11 @@ process-nextick-args@~2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/process-nextick-args/-/process-nextick-args-2.0.0.tgz#a37d732f4271b4ab1ad070d35508e8290788ffaa"
 
-progress@^2.0.1:
+progress-bar@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.npmjs.org/progress-bar/-/progress-bar-0.1.1.tgz#c32834f88f0f8eac46c638e0e638f14a1c17bd1f"
+
+progress@^2.0.1, progress@^2.0.2:
   version "2.0.2"
   resolved "https://registry.npmjs.org/progress/-/progress-2.0.2.tgz#db9476f916bcc9ebe8a04efb22b18b0740376c61"
 

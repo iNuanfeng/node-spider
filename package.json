@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/iNuanfeng/node-spider#readme",
   "dependencies": {
+    "progress": "^2.0.2",
+    "progress-bar": "^0.1.1",
     "puppeteer": "^1.11.0"
   }
 }
