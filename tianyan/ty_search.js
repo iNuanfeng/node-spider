@@ -1,12 +1,13 @@
 var ProgressBar = require('progress');
 const {
-  isPhone
+  isPhone,
+  regular
 } = require('../utils')
 
 const SIZE = 50;
 const LENGTH = 50;
 
-const so_search = async function (browser, appList) {
+const ty_search = async function (browser, appList) {
   let data = [];
   let bar = new ProgressBar(':bar :current/:total', {
     total: appList.length
@@ -25,13 +26,10 @@ const so_search = async function (browser, appList) {
 
   for (let i = 0; i < promises.length; i++) {
     await Promise.all(promises[i].map(async runPage => {
-      let phone = await startPage(browser, runPage);
-
-      // 查到电话，才添加到结果列表
-      if (phone) {
-        data.push(Object.assign({}, runPage, {
-          phone
-        }));
+      let contact = await startPage(browser, runPage);
+      // 查到联系信息，才添加到结果列表
+      if (contact) {
+        data.push(Object.assign({}, runPage, contact));
       }
 
       bar.tick(1);
@@ -45,17 +43,23 @@ const so_search = async function (browser, appList) {
 async function startPage(browser, runPage) {
   const page = await browser.newPage();
 
-  let phone
+  let phone = '';
+  let mail = '';
 
   try {
-    let searchUrl = `http://www.soso.com/tx?query=${runPage.company} 电话`;
+    let searchUrl = `https://www.tianyancha.com/search?key=${runPage.company}`;
     await page.goto(searchUrl);
     await page.waitFor(200);
 
-    phone = await page.$eval('.vrwrap p', el => el.innerHTML);
-    phone = phone.replace(/<span class="tl-tit">公司电话：<\/span>/g, '');
-    if (!isPhone(phone)) {
-      phone = '';
+    let contactDom = await page.$eval('.search-result-single .contact', el => el.innerHTML);
+
+    phone = contactDom.match(regular.phoneExp);
+    mail = contactDom.match(regular.mailExp);
+    if (phone) {
+      phone = phone[0]
+    }
+    if (mail) {
+      mail = mail[0]
     }
 
     await page.close();
@@ -64,7 +68,14 @@ async function startPage(browser, runPage) {
     await page.close();
   }
 
-  return phone
+  if (!phone && !mail) {
+    return null
+  } else {
+    return {
+      phone,
+      mail
+    }
+  }
 }
 
-module.exports = so_search
+module.exports = ty_search

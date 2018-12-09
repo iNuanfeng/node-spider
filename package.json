@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/iNuanfeng/node-spider#readme",
   "dependencies": {
+    "iconv-lite": "^0.4.24",
     "node-xlsx": "^0.12.1",
     "progress": "^2.0.2",
     "puppeteer": "^1.11.0"

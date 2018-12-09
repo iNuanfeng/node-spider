@@ -32,8 +32,23 @@ function obj2arr(obj) {
   return arr;
 }
 
+function sleep(time) {
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      resolve();
+    }, time)
+  });
+}
+
+const regular = {
+  phoneExp: /[0-9]([0-9]|-){6,}[0-9]/,
+  mailExp: /([a-z0-9\-_\.]+@[a-z0-9]+\.[a-z0-9\-_\.]+)+/i
+}
+
 module.exports = {
   isPhone,
   uniqApp,
-  obj2arr
+  obj2arr,
+  sleep,
+  regular
 }
