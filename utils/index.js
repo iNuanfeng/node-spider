@@ -34,7 +34,7 @@ function obj2arr(obj) {
 
 function sleep(time) {
   return new Promise((resolve, reject) => {
-    setTimeout(function() {
+    setTimeout(function () {
       resolve();
     }, time)
   });
@@ -45,10 +45,21 @@ const regular = {
   mailExp: /([a-z0-9\-_\.]+@[a-z0-9]+\.[a-z0-9\-_\.]+)+/i
 }
 
+function contains(arr, obj) {
+  var i = arr.length;
+  while (i--) {
+    if (arr[i] === obj) {
+      return true;
+    }
+  }
+  return false;
+}
+
 module.exports = {
   isPhone,
   uniqApp,
   obj2arr,
   sleep,
-  regular
+  regular,
+  contains
 }

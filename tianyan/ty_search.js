@@ -1,11 +1,12 @@
 var ProgressBar = require('progress');
 const {
   isPhone,
-  regular
+  regular,
+  sleep,
+  contains
 } = require('../utils')
 
 const SIZE = 50;
-const LENGTH = 50;
 
 const ty_search = async function (browser, appList) {
   let data = [];
@@ -25,15 +26,27 @@ const ty_search = async function (browser, appList) {
   }
 
   for (let i = 0; i < promises.length; i++) {
-    await Promise.all(promises[i].map(async runPage => {
+    let contacts = await Promise.all(promises[i].map(async runPage => {
       let contact = await startPage(browser, runPage);
-      // 查到联系信息，才添加到结果列表
-      if (contact) {
-        data.push(Object.assign({}, runPage, contact));
-      }
-
-      bar.tick(1);
+      
+      return contact
     }))
+
+    // 重新验证登录，这一波重来
+    if (contains(contacts, 'RELOGIN')) {
+      i--;
+      continue;
+    }
+
+    for (let j = 0; j < promises[i].length; j++) {
+      // 查到联系信息，才添加到结果列表
+      if (contacts[j]) {
+        data.push(Object.assign({}, promises[i][j], contacts[j]));
+      }
+    }
+    
+    bar.tick(SIZE);
+
   }
 
   return data;
@@ -48,8 +61,18 @@ async function startPage(browser, runPage) {
 
   try {
     let searchUrl = `https://www.tianyancha.com/search?key=${runPage.company}`;
+
     await page.goto(searchUrl);
     await page.waitFor(200);
+
+    // 判断需要验证码
+    let urlString = page.url()
+    
+    if (urlString.indexOf('antirobot') !== -1 || urlString.indexOf('login') !== -1) {
+      await sleep(20000);
+      await page.close();
+      return 'RELOGIN'
+    }
 
     let contactDom = await page.$eval('.search-result-single .contact', el => el.innerHTML);
 

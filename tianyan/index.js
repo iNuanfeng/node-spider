@@ -1,26 +1,34 @@
 // 引入依赖插件
 const puppeteer = require('puppeteer');
 const ty_search = require('./ty_search');
+const ty_test = require('./ty_test.bak');
 
 const { sleep } = require('../utils');
 const { readFile, writeFile } = require('../utils/fs');
+const { getSpiderProxy } = require('../utils/proxy');
 const path = require('path');
 
 let data = null;
-let categoryIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 27];
-// let categoryIds = [100];
+// let categoryIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 27];
+let categoryIds = [1];
 
 (async () => {
+  // let proxyData = await getSpiderProxy();
+
   let browser = await puppeteer.launch({
     headless: false,
     // headless: true,
     timeout: 10000,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    // args: ['--no-sandbox', '--disable-setuid-sandbox', `--proxy-server=${proxyData}`],
     ignoreHTTPSErrors: true
   });
 
+  // await ty_test(browser);
+  // return;
   // await ty_search(browser);
   // return
+  
   // 暂停一段时间，人工在chrome登录一次
   await sleep(30000);
 
