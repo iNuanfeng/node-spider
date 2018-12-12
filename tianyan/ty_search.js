@@ -5,11 +5,13 @@ const {
   sleep,
   contains
 } = require('../utils')
+const { readFile, writeFile, exists } = require('../utils/fs');
+const path = require('path');
 
 const SIZE = 50;
 
 const ty_search = async function (browser, appList) {
-  let data = [];
+
   let bar = new ProgressBar(':bar :current/:total', {
     total: appList.length
   });
@@ -26,6 +28,8 @@ const ty_search = async function (browser, appList) {
   }
 
   for (let i = 0; i < promises.length; i++) {
+    let data = [];
+    
     let contacts = await Promise.all(promises[i].map(async runPage => {
       let contact = await startPage(browser, runPage);
       
@@ -45,11 +49,19 @@ const ty_search = async function (browser, appList) {
       }
     }
     
+    if (!exists(path.join(__dirname, `../data/tmp_tyData.json`))) {
+      await writeFile(path.join(__dirname, `../data/tmp_tyData.json`), JSON.stringify([]))
+    }
+    let fileData = await readFile(path.join(__dirname, `../data/tmp_tyData.json`));
+    fileData = JSON.parse(fileData);
+    fileData = fileData.concat(data);
+
+    // 每一波都写入一次临时文件
+    await writeFile(path.join(__dirname, `../data/tmp_tyData.json`), JSON.stringify(fileData))
     bar.tick(SIZE);
 
   }
 
-  return data;
 }
 
 
@@ -60,7 +72,7 @@ async function startPage(browser, runPage) {
   let mail = '';
 
   try {
-    let searchUrl = `https://www.tianyancha.com/search?key=${runPage.company}`;
+    let searchUrl = `http://www.tianyancha.com/search?key=${runPage.company}`;
 
     await page.goto(searchUrl);
     await page.waitFor(200);

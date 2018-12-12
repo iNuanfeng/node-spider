@@ -25,6 +25,10 @@ function readFile(url) {
   })
 }
 
+function exists(url) {
+  return fs.existsSync(url)
+}
+
 async function mkdirsSync(dirname) {
   if (fs.existsSync(dirname)) {
     return true;
@@ -56,5 +60,6 @@ module.exports = {
   writeFile,
   readFile,
   mkdirsSync,
-  deleteFile
+  deleteFile,
+  exists
 }
