@@ -13,7 +13,6 @@ let data = null;
 // let categoryIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 27];
 let categoryIds = [27];
 let ignoreLen = 0;
-let dataName = '';
 
 (async () => {
   // let proxyData = await getSpiderProxy();
