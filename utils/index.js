@@ -5,24 +5,6 @@ function isPhone(str) {
   return true;
 }
 
-// 数组去重
-function uniqApp(array) {
-  let temp = []; //一个新的临时数组
-  for (let i = 0; i < array.length; i++) {
-    let flag = true;
-    for (let j = 0; j < temp.length; j++) {
-      if (array[i].appName === temp[j].appName) {
-        flag = false;
-        break;
-      }
-    }
-    if (flag) {
-      temp.push(array[i]);
-    }
-  }
-  return temp;
-}
-
 // 对象转数组
 function obj2arr(obj) {
   let arr = [];
@@ -57,7 +39,6 @@ function contains(arr, obj) {
 
 module.exports = {
   isPhone,
-  uniqApp,
   obj2arr,
   sleep,
   regular,

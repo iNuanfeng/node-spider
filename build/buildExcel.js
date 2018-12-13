@@ -4,20 +4,29 @@ const {
 } = require('../utils/fs');
 const {
   uniqApp,
+  coverApp
+} = require('./utils');
+const {
   obj2arr
 } = require('../utils');
 const path = require('path');
 const xlsx = require('node-xlsx');
 const getBaidu = require('./getBaidu');
 const getSoso = require('./getSoso');
+const getTianyan = require('./getTianyan');
 
 let data = [];
 
 (async () => {
-  let sosoData = await getSoso();
+  let sosoData = await getSoso(); // 8872
+
+  let tyData = await getTianyan();  // 7179
+
+  let sotianData = coverApp(sosoData, tyData);  // 9319
+
   let baiduData = await getBaidu();
 
-  data = [].concat(sosoData, baiduData);
+  data = [].concat(sotianData, baiduData);
   data = uniqApp(data)
 
   // 转数组 用于excel导出
