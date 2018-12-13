@@ -8,7 +8,7 @@ const {
 const { readFile, writeFile, exists } = require('../utils/fs');
 const path = require('path');
 
-const SIZE = 50;
+const SIZE = 30;
 
 const ty_search = async function (browser, appList) {
 
@@ -51,9 +51,6 @@ const ty_search = async function (browser, appList) {
       }
     }
     
-    if (!exists(path.join(__dirname, `../data/sotian/tmp_tyData.json`))) {
-      await writeFile(path.join(__dirname, `../data/sotian/tmp_tyData.json`), JSON.stringify([]))
-    }
     let fileData = await readFile(path.join(__dirname, `../data/sotian/tmp_tyData.json`));
     fileData = JSON.parse(fileData);
     fileData = fileData.concat(data);

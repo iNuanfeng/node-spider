@@ -9,7 +9,7 @@ const path = require('path');
 let data = null;
 // let categoryIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 27];
 // let categoryIds = [10, 11, 12, 13, 14, 15, 27];
-let categoryIds = [1];
+let categoryIds = [2];
 let ignoreLen = 0;
 
 (async () => {
@@ -30,6 +30,10 @@ let ignoreLen = 0;
 
     console.log(`${categoryName}, start...`)
     data[categoryName].data.splice(0, ignoreLen);
+
+    if (!exists(path.join(__dirname, `../data/sotian/tmp_tyData.json`)) || ignoreLen === 0) {
+      await writeFile(path.join(__dirname, `../data/sotian/tmp_tyData.json`), JSON.stringify([]))
+    }
 
     await ty_search(browser, data[categoryName].data);
     let dataArr = await readFile(path.join(__dirname, `../data/sotian/tmp_tyData.json`));
