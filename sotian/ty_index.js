@@ -3,13 +3,13 @@ const puppeteer = require('puppeteer');
 const ty_search = require('./ty_search');
 
 const { sleep } = require('../utils');
-const { readFile, writeFile } = require('../utils/fs');
+const { readFile, writeFile, exists } = require('../utils/fs');
 const path = require('path');
 
 let data = null;
 // let categoryIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 27];
 // let categoryIds = [10, 11, 12, 13, 14, 15, 27];
-let categoryIds = [2];
+let categoryIds = [3];
 let ignoreLen = 0;
 
 (async () => {
