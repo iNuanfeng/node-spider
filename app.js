@@ -6,7 +6,7 @@ var express = require('express'),
   fs = require('fs');
 
 var CONFIG = {
-  uri: 'http://www.mca.gov.cn/article/sj/tjbz/a/2018/201803131439.html'
+  uri: 'http://www.mca.gov.cn/article/sj/xzqh/2019/201908/201908271607.html'
   // uri: 'http://localhost:3000/a'
 }
 
@@ -113,6 +113,24 @@ function generateArea(data, res) {
   return result;
 }
 
+function transformAntd(data) {
+  let result = data.map(item => {
+    return {
+      value: item.name,
+      label: item.name,
+      children: item.children
+    }
+  })
+
+  result.forEach(item => {
+    if (item.children) {
+      item.children = transformAntd(item.children)
+    }
+  })
+  
+  return result
+}
+
 /**
  * 开始
  */
@@ -141,6 +159,9 @@ function start(req, res) {
 
     // 生成数据文件
     var result = generateArea(data, _res);
+
+    // 转换为antd使用格式
+    result = transformAntd(result)
 
     // 开始写入文件
     console.log('数据生成完成，开始写入文件...')
