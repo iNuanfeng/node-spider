@@ -113,6 +113,7 @@ function generateArea(data, res) {
   return result;
 }
 
+// 转换antd
 function transformAntd(data) {
   let result = data.map(item => {
     return {
@@ -127,7 +128,7 @@ function transformAntd(data) {
       item.children = transformAntd(item.children)
     }
   })
-  
+
   return result
 }
 
