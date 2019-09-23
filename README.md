@@ -9,15 +9,17 @@ nodejs爬虫，爬取汽车之家所有车型数据 http://www.autohome.com.cn/c
 
 1、爬取汽车之家的数据;
 
-2、自动存入MongoDB数据库
+2、自动存入MongoDB数据库;
+
+3、添加cz-customizable插件，从而规范git提交说明的规范;
+
+4、添加commitlint/cli，校验git说明是否符合规范；
 
 ### 未来要添加特性
 
 1、用HighChart显示爬取数据;
 
-2、将数据自动存入MySQL;
-
-3、添加单元测试.
+2、添加单元测试.
 
 ### 使用的node模块：
 

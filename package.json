@@ -22,6 +22,19 @@
     "mysql": "^2.13.0",
     "request": "^2.79.0",
     "save-to-mongo": "^1.0.0",
-    "series": "^0.3.3"
+    "series": "^0.3.3",
+    "cz-customizable": "^6.2.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "czconfig.js"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "husky": "^3.0.5"
   }
 }
