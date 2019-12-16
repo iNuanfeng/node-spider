@@ -1,3 +1,5 @@
+> 在 area 分支中，有爬取行政局全国省市区数据的功能。
+
 ## 应用介绍
 nodejs爬虫，爬取汽车之家所有车型数据 http://www.autohome.com.cn/car/
 
