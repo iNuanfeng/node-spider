@@ -6,7 +6,7 @@ var express = require('express'),
   fs = require('fs');
 
 var CONFIG = {
-  uri: 'http://www.mca.gov.cn/article/sj/xzqh/2019/201908/201908271607.html'
+  uri: 'http://www.mca.gov.cn//article/sj/xzqh/2020/2020/20200908007001.html'
   // uri: 'http://localhost:3000/a'
 }
 
@@ -117,8 +117,8 @@ function generateArea(data, res) {
 function transformAntd(data) {
   let result = data.map(item => {
     return {
-      value: item.name,
-      label: item.name,
+      code: item.code,
+      name: item.name.replace(/\s+/g,""),
       children: item.children
     }
   })
