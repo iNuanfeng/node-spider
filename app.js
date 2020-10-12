@@ -112,7 +112,7 @@ function generateArea(data, res) {
 
   return result;
 }
-
+let count = 0
 // 转换antd
 function transformAntd(data) {
   let result = data.map(item => {
@@ -126,6 +126,8 @@ function transformAntd(data) {
   result.forEach(item => {
     if (item.children) {
       item.children = transformAntd(item.children)
+    } else {
+      count++
     }
   })
 
@@ -163,7 +165,7 @@ function start(req, res) {
 
     // 转换为antd使用格式
     result = transformAntd(result)
-
+    
     // 开始写入文件
     console.log('数据生成完成，开始写入文件...')
     var t = JSON.stringify(result);
